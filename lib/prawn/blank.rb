@@ -1,8 +1,6 @@
 # encoding: utf-8
 
-require 'prawn/document'
-
-Prawn::Document.extensions << Prawn::Blank
+require 'prawn'
 
 module Prawn
   module Blank
@@ -116,3 +114,5 @@ protected
   end
 
 end
+
+Prawn::Document.extensions << Prawn::Blank
