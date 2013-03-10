@@ -1,4 +1,9 @@
-# -*- encoding : utf-8 -*-
+# encoding: utf-8
+
+require 'prawn/document'
+
+Prawn::Document.extensions << Prawn::Blank
+
 module Prawn
   module Blank
     autoload :Form,"prawn/blank/form"
@@ -13,7 +18,7 @@ module Prawn
     autoload :RadioGroup, "prawn/blank/radio_group"
     autoload :Radio, "prawn/blank/radio"
     autoload :TextStyle,"prawn/blank/text_style"
-    
+
     def text_field(options={})
       if options[:at]
         options[:at] = self.send(:map_to_absolute,options[:at])
@@ -25,7 +30,7 @@ module Prawn
       end
       add_field(f)
     end
-    
+
     def select(options={})
       if options[:at]
         options[:at] = self.send(:map_to_absolute,options[:at])
@@ -36,7 +41,7 @@ module Prawn
       end
       add_field(f)
     end
-    
+
     def checkbox(options={})
       if options[:at]
         options[:at] = self.send(:map_to_absolute,options[:at])
@@ -47,7 +52,7 @@ module Prawn
       end
       add_field(f)
     end
-    
+
     def radiogroup(options={})
       f=RadioGroup.create(self,options)
       if block_given?
@@ -55,7 +60,7 @@ module Prawn
       end
       return add_field(f)
     end
-    
+
     def radio(options={})
       if options[:at]
         options[:at] = self.send(:map_to_absolute,options[:at])
@@ -66,18 +71,18 @@ module Prawn
       end
       return add_field(f)
     end
-    
+
     def acroform
       state.store.root.data[:AcroForm] ||= ref!(Form.new)
       state.store.root.data[:AcroForm].data
     end
-    
+
     attr_accessor :default_appearance
-    
+
     def default_appearance
       @default_appearance ||= Appearance.new(self)
     end
-    
+
 protected
     def add_field(field)
       field.finalize(self)
@@ -88,13 +93,13 @@ protected
       return field
     end
   end
-  
+
   def TextStyle(*args)
-    
+
     Prawn::Blank::TextStyle.new(*args)
-    
+
   end
-  
+
   def BorderStyle(doc,width,style=:S)
     {
       :W => width,
@@ -102,14 +107,12 @@ protected
       :S => style
     }
   end
-  
+
   def ColorStyle(doc,fill,stroke)
     {
       :BC => doc.send(:normalize_color,stroke),
       :BG => doc.send(:normalize_color,fill)
     }
   end
-  
+
 end
-require 'prawn/document'
-Prawn::Document.extensions << Prawn::Blank
