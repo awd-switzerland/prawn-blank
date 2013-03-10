@@ -1,5 +1,5 @@
 source 'http://rubygems.org/'
 
-gem "prawn", ">= 0.11.1.pre"
+gem "prawn", "~> 0.12.0"
 
 #gemspec
